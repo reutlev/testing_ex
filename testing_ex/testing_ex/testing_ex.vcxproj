@@ -74,11 +74,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.c" />
-    <ClCompile Include="Threadexample.c" />
+    <ClCompile Include="FileCompare.c" />
+    <ClCompile Include="Hw1TextFileReader.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ParseTestSpec.h" />
+    <ClInclude Include="common.h" />
+    <ClInclude Include="FileCompare.h" />
+    <ClInclude Include="Hw1TextFileReader.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="testing_ex.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

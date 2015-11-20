@@ -7,7 +7,7 @@
 //This function receives strings of the output file name and the expected file name.
 //Goes through those files and checks whether they are equal or not.
 //returns test_results
-test_result CompareOutputVersusExpected(
+bool CompareOutputVersusExpected(
 	char output_file,
 	char expected_file
 );
