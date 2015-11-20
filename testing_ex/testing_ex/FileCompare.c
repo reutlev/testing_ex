@@ -17,14 +17,14 @@ BOOL CompareOutputVersusExpected(const char *output_file, const char *expected_f
 	if ( error_output != 0)
 	{
 			LOG_ERROR("Could not open an output file for compare");
-			return TRUE;
+			return FALSE;
 	}
 
 	error_expected = fopen_s(&expected_file_ptr, expected_file, "r");
 	if ( error_expected != 0)
 	{
 			LOG_ERROR("Could not open an expected output file for compare");
-			return TRUE;
+			return FALSE;
 	}
 
 	do
@@ -52,12 +52,12 @@ BOOL CompareOutputVersusExpected(const char *output_file, const char *expected_f
 			printf("Found unequal output file and expected outputfile.");
 			test_result = FAILED;
 			test->test_result = test_result;
-			return FALSE;
+			return TRUE;
 		}
 
 	}while(1);
 
 	test_result = SUCCEEDED;
 	test->test_result = test_result;
-	return FALSE;
+	return TRUE;
 }
