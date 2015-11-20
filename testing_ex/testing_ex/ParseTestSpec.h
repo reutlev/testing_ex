@@ -2,7 +2,8 @@
 //Belongs to project: testing_ex
 //This module parsing the specification file and creates an array of structures of data 
 // need to be transfered to the threads workers with fields to fill in by the workers.
-
+//depending files: HW1TextFileReader.h,HW1TextFileReader.c,common.h
+#include "Hw1TextFileReader.h"
 
 #ifndef PARSE_T
 #define PARSE_T
