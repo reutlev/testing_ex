@@ -30,6 +30,10 @@ Engineering, Winter 2011, by Amnon Drory.
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+//
+#include <windows.h>
+#include <WinBase.h>
+#include <tchar.h>
 
 #include "Hw1TextFileReader.h"
 

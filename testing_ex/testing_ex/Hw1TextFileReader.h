@@ -83,7 +83,9 @@ School of Electrical Engineering, Tel-Aviv University. winter 2012.
 #define HW1_TEXT_FILE_READER_H
 
 /*oOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoO*/
-
+#include <windows.h>
+#include <WinBase.h>
+#include <tchar.h>
 #include "common.h"
 
 /* the following const-type definitions make sure that the user can */
