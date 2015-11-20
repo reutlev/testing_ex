@@ -3,14 +3,30 @@
 #include <stdlib.h>
 #include <WinBase.h>
 #include <tchar.h>
+#include "FileCompare.h"
+#include "ParseTestSpec.h"
 
 HANDLE CreateThreadSimple(LPTHREAD_START_ROUTINE StartAddress,
 	LPVOID ParameterPtr,
 	LPDWORD ThreadIdPtr);
 int PrintingHello (int * i);
 BOOL CreateProcessSimple(LPTSTR CommandLine, PROCESS_INFORMATION *ProcessInfoPtr);
+
 int main ()
 {
+	//const char *output_file = "C:\\Users\\HP\\Repositories\\testing_ex\\testing_ex\\testing_ex\\output.txt";
+	//const char *expected_file = "C:\\Users\\HP\\Repositories\\testing_ex\\testing_ex\\testing_ex\\expected_1.txt";
+	//TestObject *test = NULL;
+	//
+	//test = (TestObject *)malloc(sizeof(*test));
+
+	//if(CompareOutputVersusExpected(output_file, expected_file, test))
+	//{
+	//	printf("FAILED");
+	//	return;
+	//}
+	//printf("test->test_result = %d", test->test_result);
+	//return;
 	int m=6;
 	//thread variables
 	DWORD				exitcode = 98;
