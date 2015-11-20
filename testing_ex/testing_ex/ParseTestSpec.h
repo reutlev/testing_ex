@@ -18,7 +18,7 @@ typedef struct TestObject_s{
 	char *expeceted_output;
 	char *output;
 	char *path_to_exe;
-	TestResult *test_result;
+	TestResult test_result;
 } TestObject;
 // This function receive a string contaiang the input file path,a pointer to integer to be filled with number of tests in Specification file and path_to_exe which will be filled by 
 //parse the input file,fill the num_of_test by the number of tests in the file
