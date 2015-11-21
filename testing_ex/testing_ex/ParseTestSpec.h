@@ -17,7 +17,7 @@ typedef struct TestObject_s{
 	char *args;
 	char *expeceted_output;
 	char *output;
-	char *path_to_exe;
+	const char *path_to_exe;
 	TestResult test_result;
 } TestObject;
 

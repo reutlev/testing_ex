@@ -7,7 +7,7 @@
 //function declaretion:
 char* CreateAndCopyString(const char *string_to_copy);
 
-TestObject **ParseSpecificationFile(char *input_file, int *num_of_tests, char *path_to_exe)
+TestObject **ParseSpecificationFile(char *input_file, int *num_of_tests,const char *path_to_exe)
 {
 	int tests_num=0,size=0;
 	int i,line_i,word_i,j,non_empty_line=0,length=0,test_num=0;
@@ -37,7 +37,7 @@ TestObject **ParseSpecificationFile(char *input_file, int *num_of_tests, char *p
     }
 	//dividing by 2, because each two lines represent a test
 	tests_num=tests_num/2;
-
+	
 	tests_array= (TestObject **)malloc(tests_num*sizeof(TestObject *));
 	if (tests_array == NULL)
 	{
@@ -62,6 +62,7 @@ TestObject **ParseSpecificationFile(char *input_file, int *num_of_tests, char *p
 			tests_array[i]->args=NULL;
 			tests_array[i]->expeceted_output=NULL;
 			tests_array[i]->output=NULL;
+			tests_array[i]->path_to_exe = path_to_exe; //They all share the same path to exe, because it can only be readed by the thread, no race condition can happens.
 	}
 	
     for ( line_i = 0 ; line_i < reader.NumOfLines ; line_i++ )
