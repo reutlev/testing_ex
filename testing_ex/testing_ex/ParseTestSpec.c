@@ -9,7 +9,7 @@ char* CreateAndCopyString(const char *string_to_copy);
 
 TestObject **ParseSpecificationFile(char *input_file, int *num_of_tests, char *path_to_exe)
 {
-	int tests_num=0;
+	int tests_num=0,size=0;
 	int i,line_i,word_i,j,non_empty_line=0,length=0,test_num=0;
 	TestObject ** tests_array;
 	TextFileReader reader;
@@ -24,6 +24,7 @@ TestObject **ParseSpecificationFile(char *input_file, int *num_of_tests, char *p
 		LOG_INFO("Specification file is empty");
 		return NULL;
 	}
+	
 	//Find the number of tests
 	//the reader ignore new lines but not ignore tab,
 	// dealing with diffrent spec file which containing tabs instead of only new lines.
@@ -43,6 +44,7 @@ TestObject **ParseSpecificationFile(char *input_file, int *num_of_tests, char *p
 		LOG_ERROR("failed to allocate memory");
 		return NULL; 
 	}
+	size=sizeof(tests_array[tests_num-1]);
 	//allocate memory for each entry - which is struct
 	for (i = 0; i<tests_num ; i++)
 	{
@@ -57,8 +59,9 @@ TestObject **ParseSpecificationFile(char *input_file, int *num_of_tests, char *p
 			free(tests_array);//free already alloaceted memory in this function
 			return NULL; 
 		}
-			memset(tests_array[i], '\0', sizeof(*tests_array[i]));//initialized all to zero
 			tests_array[i]->args=NULL;
+			tests_array[i]->expeceted_output=NULL;
+			tests_array[i]->output=NULL;
 	}
 	
     for ( line_i = 0 ; line_i < reader.NumOfLines ; line_i++ )
@@ -71,36 +74,52 @@ TestObject **ParseSpecificationFile(char *input_file, int *num_of_tests, char *p
 				test_num=non_empty_line/2;//the number of test if always dividing of 2 of non_empty_line, because each test will have 2 lines
 				length=strlen(reader.WordsArr[line_i][reader.WordsInLine[line_i]-1]);
 				tests_array[test_num]->output=CreateAndCopyString(reader.WordsArr[line_i][reader.WordsInLine[line_i]-1]);
-				if(tests_array[test_num]->output==NULL)
+		//	length=0;
+		//	length = strlen (reader.WordsArr[line_i][reader.WordsInLine[line_i]-1]);
+		//tests_array[test_num]->output = (char *)malloc((length+1)*sizeof(char));
+						if(tests_array[test_num]->output==NULL)
 				{
 					LOG_ERROR("failed to create new string and copy exsisting");
 					FreeTestsArrayMemory(tests_array,tests_num);//free already allocated memory
 					return NULL;
 				}	
+	//memcpy(tests_array[test_num]->output, reader.WordsArr[line_i][reader.WordsInLine[line_i]-1], length+1);
+	
 				//saving the arguments with the last which is output file
+				length=0;
 				for ( word_i = 0; word_i < (reader.WordsInLine[line_i]) ; word_i++ ) 
 				  {//calcullating the total length with the terminating null character\additional space between words
 					  length =length+ strlen (reader.WordsArr[line_i][word_i])+1;//+1 is for space char\end of string special char
 					  tests_array[test_num]->args=(char *)realloc(tests_array[test_num]->args,(length)*sizeof(char));
 					  if(tests_array[test_num]->args==NULL)
 					  {
-						  LOG_ERROR("Failed to realloc memory");
-						  FreeTestsArrayMemory(tests_array,tests_num); //free already allocated memory
-						  return NULL;
+						 // LOG_ERROR("Failed to realloc memory");
+						 // FreeTestsArrayMemory(tests_array,tests_num); //free already allocated memory
+						 // return NULL;
 					  }
-					  strcat(tests_array[test_num]->args," ");//add space to the string between each two arguments
+					  					  if(word_i ==0)//first arguement, we want to have \0 in the empty
+					  {
+						  tests_array[test_num]->args[0]='\0';
+					  }
+					  else strcat(tests_array[test_num]->args," ");//add space to the string between each two arguments
 					  strcat(tests_array[test_num]->args,reader.WordsArr[line_i][word_i]);//concatenate the new arg with the previous already concatenate
 				  }
 			}
 			else//odd line
 			{
 				tests_array[test_num]->expeceted_output=CreateAndCopyString(reader.WordsArr[line_i][0]);
+			//				length=0;
+		//	length = strlen (reader.WordsArr[line_i][0]);
+			//tests_array[test_num]->expeceted_output = (char *)malloc((length+1)*sizeof(char));
+	//		tests_array[test_num]->expeceted_output =tests_array[test_num]->output;
 				if(tests_array[test_num]->expeceted_output==NULL)
 				{
 					LOG_ERROR("failed to create new string and copy exsisting");
 					FreeTestsArrayMemory(tests_array,tests_num);//free already allocated memory
 					return NULL;
 				}	
+				//memcpy(tests_array[test_num]->expeceted_output, reader.WordsArr[line_i][0], length+1);
+	
 			}
 			non_empty_line++;
 		//$// even_line=1-even_line;//change odd-even status: 0-odd non-empty line, 1- even non empty line. the "1-even_line" inverse 1 to 0 and 0 to 1
